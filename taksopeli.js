@@ -6,8 +6,12 @@ import { csvData } from "./data.js"; // tuo csvData toisesta tiedostosta
 document.addEventListener("DOMContentLoaded", () => {
   console.log("JavaScript on valmis ja strict-tila on käytössä!");
 
-  // Tulostetaan data JSON-muodossa
-  console.log(csvToJson(csvData));
+  // CSV-data JSON-muodossa
+  let jsonstring = csvToJson(csvData);
+
+  //JSON objektiksi
+  let data = JSON.parse(jsonstring);
+  console.log(data);
 });
 
 /**
