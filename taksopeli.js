@@ -4,7 +4,7 @@ import { csvData } from "./data.js"; // tuo csvData toisesta tiedostosta
 
 /**
  * Taksonomiadata globaalina muuttujana.
- * Vastaavasti tietyin ehdoin suodatettu data.
+ * Vastaavasti tietyin ehdoin suodatettu data omassa muuttujassaan.
  */
 let data;
 let filteredData;
@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   suomestaTieteelliseksi();
 });
 
+/**
+ * Luo lomakkeen jossa suomenkieliselle lajille tulee vastata oikea
+ * tieteellinen nimi.
+ */
 function suomestaTieteelliseksi() {
   // Määritetään satunnaisesti valitun lintulajin indeksi tietorakenteessa
   let oikeaIndeksi = getRandomInt(0, filteredData.length);
@@ -43,16 +47,23 @@ function suomestaTieteelliseksi() {
     // Luodaan painike ja attribuutit
     let painike = document.createElement("button");
     painike.setAttribute("class", "button");
-    painike.setAttribute(
-      "onclick",
-      "valitse('Vaihtoehto " + vaihtoehtoNro + "')"
-    );
     painike.textContent = tieteellinen; // Tieteellinen nimi painikkeen tekstiksi
+    painike.setAttribute("value", tieteellinen);
+    painike.addEventListener(
+      "click",
+      tarkistaVastaus,
+      filteredData[oikeaIndeksi].tieteellinen
+    );
     document.forms[0].appendChild(painike);
     vaihtoehtoNro++;
   }
 }
 
+/**
+ * Arvotaan monivalintakenttään satunnaiset vaihtoehdot
+ * @param {Object} oikea - Oikea vastausvaihtoehto
+ * @returns - Sekoitettu taulukko vastausvaihtoehdoista
+ */
 function vaihtoehdotTieteellinen(oikea) {
   // Aluksi tyhjään taulukkoon oikea vastaus
   let taulukko = [];
@@ -71,12 +82,32 @@ function vaihtoehdotTieteellinen(oikea) {
   return taulukko;
 }
 
+function tarkistaVastaus(e, oikeaTieteellinen) {
+  let palautekentta = document.getElementById("palaute");
+  let vastaus = document.createElement("p");
+  vastaus.textContent = "Vastauksesi: " + e.target.value;
+  palautekentta.appendChild(vastaus);
+  let oikea = document.createElement("p");
+  oikea.textContent = oikeaTieteellinen;
+  palautekentta.appendChild(oikea);
+}
+
+/**
+ * Tarjoaa satunnaisen kokonaisluvun
+ * @param {Number} min
+ * @param {Number} max
+ * @returns - Kokonaisluku
+ */
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * Suodattaa datasta pois joitakin erikoistapauksia
+ * @returns - Suodatettu kopio alkuperäisestä tietorakenteesta
+ */
 function suodataData() {
   let kopio = [];
   for (let alkio of data) {
