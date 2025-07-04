@@ -33,20 +33,42 @@ function suomestaTieteelliseksi() {
   tehtava.textContent = filteredData[oikeaIndeksi].suomalainen;
   document.forms[0].appendChild(tehtava);
 
-  // Valintapainikkeet
-  let valinta1 = document.createElement("button");
-  let valinta2 = document.createElement("button");
-  let valinta3 = document.createElement("button");
-  valinta1.setAttribute("class", "button");
-  valinta2.setAttribute("class", "button");
-  valinta3.setAttribute("class", "button");
-  valinta1.setAttribute("onclick", "valitse('Vaihtoehto A')");
-  valinta2.setAttribute("onclick", "valitse('Vaihtoehto B')");
-  valinta3.setAttribute("onclick", "valitse('Vaihtoehto C')");
-
   // Vastausvaihtoehdot ja niiden satunnainen järjestys
-  let vaihtoehdot = [];
-  vaihtoehdot.push();
+  let vaihtoehdot = vaihtoehdotTieteellinen(oikeaIndeksi);
+
+  // Luodaan valintapainikkeet
+  // Läpikäynti luoduille vaihtoehdoille
+  let vaihtoehtoNro = 0;
+  for (let tieteellinen of vaihtoehdot) {
+    // Luodaan painike ja attribuutit
+    let painike = document.createElement("button");
+    painike.setAttribute("class", "button");
+    painike.setAttribute(
+      "onclick",
+      "valitse('Vaihtoehto " + vaihtoehtoNro + "')"
+    );
+    painike.textContent = tieteellinen; // Tieteellinen nimi painikkeen tekstiksi
+    document.forms[0].appendChild(painike);
+    vaihtoehtoNro++;
+  }
+}
+
+function vaihtoehdotTieteellinen(oikea) {
+  // Aluksi tyhjään taulukkoon oikea vastaus
+  let taulukko = [];
+  taulukko.push(filteredData[oikea].tieteellinen);
+  // Luodaan satunnaiset muut vaihtoehdot
+  for (let i = 0; i < 4; i++) {
+    let indeksi = getRandomInt(0, filteredData.length);
+    if (indeksi === oikea) {
+      continue;
+    }
+    taulukko.push(filteredData[indeksi].tieteellinen);
+  }
+
+  // Sekoitetaan taulukko satunnaiseen järjestykseen ja palautetaan taulukko
+  taulukko.sort(() => Math.random() - 0.5);
+  return taulukko;
 }
 
 function getRandomInt(min, max) {
