@@ -8,6 +8,7 @@ import { csvData } from "./data.js"; // tuo csvData toisesta tiedostosta
  */
 let data;
 let filteredData;
+let oikeaVastaus;
 
 // Koodi suoritetaan, kun sivu on ladattu
 document.addEventListener("DOMContentLoaded", () => {
@@ -42,21 +43,18 @@ function suomestaTieteelliseksi() {
 
   // Luodaan valintapainikkeet
   // Läpikäynti luoduille vaihtoehdoille
-  let vaihtoehtoNro = 0;
   for (let tieteellinen of vaihtoehdot) {
     // Luodaan painike ja attribuutit
     let painike = document.createElement("button");
     painike.setAttribute("class", "button");
     painike.textContent = tieteellinen; // Tieteellinen nimi painikkeen tekstiksi
     painike.setAttribute("value", tieteellinen);
-    painike.addEventListener(
-      "click",
-      tarkistaVastaus,
-      filteredData[oikeaIndeksi].tieteellinen
-    );
+    painike.addEventListener("click", tarkistaVastaus);
     document.forms[0].appendChild(painike);
-    vaihtoehtoNro++;
   }
+
+  // Asetetaan globaaliin muuttujaan oikea vastaus
+  oikeaVastaus = filteredData[oikeaIndeksi].tieteellinen;
 }
 
 /**
@@ -82,14 +80,42 @@ function vaihtoehdotTieteellinen(oikea) {
   return taulukko;
 }
 
-function tarkistaVastaus(e, oikeaTieteellinen) {
+function tarkistaVastaus(e) {
+  e.preventDefault();
+
+  // Luodaan tekstikenttä, johon raportoidaan palaute
   let palautekentta = document.getElementById("palaute");
   let vastaus = document.createElement("p");
   vastaus.textContent = "Vastauksesi: " + e.target.value;
   palautekentta.appendChild(vastaus);
   let oikea = document.createElement("p");
-  oikea.textContent = oikeaTieteellinen;
+  oikea.textContent = "Oikea vastaus on: " + oikeaVastaus;
   palautekentta.appendChild(oikea);
+
+  // Luodaan painike, jolla siirrytään seuraavaan kysymykseen
+  let seuraava = document.createElement("button");
+  seuraava.setAttribute("class", "seuraava");
+  seuraava.textContent = "Seuraava";
+  seuraava.addEventListener("click", paivitaKysymys);
+  palautekentta.appendChild(seuraava);
+}
+
+function paivitaKysymys(e) {
+  let lomake = document.forms[0];
+  let palaute = document.getElementById("palaute");
+
+  // Poistetaan kaikki lomakkeen elementit (tehtävänanto ja napit)
+  while (lomake.firstChild) {
+    lomake.removeChild(lomake.firstChild);
+  }
+
+  // Tyhjennetään palaute
+  while (palaute.firstChild) {
+    palaute.removeChild(palaute.firstChild);
+  }
+
+  // Luodaan uusi kysymys
+  suomestaTieteelliseksi();
 }
 
 /**
@@ -115,7 +141,11 @@ function suodataData() {
       alkio.suomalainen.includes("risteymä") ||
       alkio.suomalainen.includes("alalaji") ||
       alkio.suomalainen.includes("tarha") ||
-      alkio.suomalainen.includes("/")
+      alkio.suomalainen.includes("keskikokoinen") ||
+      alkio.suomalainen.includes("laji") ||
+      alkio.suomalainen.includes("/") ||
+      alkio.tieteellinen.includes("/") ||
+      alkio.tieteellinen.includes("pikkulintu")
     ) {
       continue;
     }
