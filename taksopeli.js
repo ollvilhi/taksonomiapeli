@@ -145,6 +145,8 @@ function suodataData() {
       alkio.suomalainen.includes("laji") ||
       alkio.suomalainen.includes("/") ||
       alkio.tieteellinen.includes("/") ||
+      alkio.suomalainen.includes("(") ||
+      alkio.tieteellinen.includes("(") ||
       alkio.tieteellinen.includes("pikkulintu")
     ) {
       continue;
