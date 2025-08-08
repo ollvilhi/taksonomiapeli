@@ -54,7 +54,7 @@ function suomestaTieteelliseksi() {
   }
 
   // Asetetaan globaaliin muuttujaan oikea vastaus
-  oikeaVastaus = filteredData[oikeaIndeksi].tieteellinen;
+  oikeaVastaus = filteredData[oikeaIndeksi].tieteellinen + " (" + filteredData[oikeaIndeksi].lyhenne + ")";
 }
 
 /**
