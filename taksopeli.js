@@ -73,13 +73,14 @@ function vaihtoehdotTieteellinen(oikea) {
   taulukko.push(filteredData[oikea]);
   //taulukko.push(filteredData[oikea].tieteellinen);
   // Luodaan satunnaiset muut vaihtoehdot
-  for (let i = 0; i < 4; i++) {
+  let i = 0;
+  while (i < 4) {
     let indeksi = getRandomInt(0, filteredData.length);
     if (indeksi === oikea) {
       continue;
     }
     taulukko.push(filteredData[indeksi]);
-    //taulukko.push(filteredData[indeksi].tieteellinen);
+    i++;
   }
 
   // Sekoitetaan taulukko satunnaiseen järjestykseen ja palautetaan taulukko
@@ -94,9 +95,9 @@ function tarkistaVastaus(e) {
   let palautekentta = document.getElementById("palaute");
   let vastaus = document.createElement("p");
   vastaus.textContent =
-    "Vastasit: " +
+    "Vastauksesi on: " +
     e.target.value +
-    ", joka on " +
+    " eli " +
     e.target.getAttribute("suomeksi");
   palautekentta.appendChild(vastaus);
   let oikea = document.createElement("p");
