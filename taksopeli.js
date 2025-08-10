@@ -152,14 +152,13 @@ function suodataData() {
     if (
       alkio.suomalainen.includes("risteymä") ||
       alkio.suomalainen.includes("alalaji") ||
-      alkio.suomalainen.includes("tarha") ||
-      alkio.suomalainen.includes("keskikokoinen") ||
       alkio.suomalainen.includes("laji") ||
+      alkio.suomalainen.includes("tarha") ||
+      alkio.suomalainen.includes(" ") ||
       alkio.suomalainen.includes("/") ||
       alkio.tieteellinen.includes("/") ||
       alkio.suomalainen.includes("(") ||
-      alkio.tieteellinen.includes("(") ||
-      alkio.tieteellinen.includes("pikkulintu")
+      alkio.tieteellinen.includes("(")
     ) {
       continue;
     }
