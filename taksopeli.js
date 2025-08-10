@@ -154,6 +154,7 @@ function suodataData() {
       alkio.suomalainen.includes("alalaji") ||
       alkio.suomalainen.includes("laji") ||
       alkio.suomalainen.includes("tarha") ||
+      alkio.tieteellinen.includes(" sp") ||
       alkio.suomalainen.includes(" ") ||
       alkio.suomalainen.includes("/") ||
       alkio.tieteellinen.includes("/") ||
