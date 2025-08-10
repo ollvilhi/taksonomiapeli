@@ -1,6 +1,5 @@
 body {
   font-family: sans-serif;
-  padding: 2rem;
   background: #f9f9f9;
   text-align: center;
 }
@@ -45,8 +44,11 @@ h1 {
   transition: background-color 0.2s ease;
 }
 
-#tulos {
-  margin-top: 2rem;
-  font-size: 1.3rem;
-  color: green;
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+  font-size: small;
 }
