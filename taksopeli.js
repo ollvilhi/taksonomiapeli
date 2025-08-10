@@ -50,16 +50,13 @@ function suomestaTieteelliseksi() {
     painike.textContent = lintu.tieteellinen; // Tieteellinen nimi painikkeen tekstiksi
     painike.setAttribute("value", lintu.tieteellinen);
     painike.setAttribute("suomeksi", lintu.suomalainen);
+    painike.setAttribute("lyhenne", lintu.lyhenne);
     painike.addEventListener("click", tarkistaVastaus);
     document.forms[0].appendChild(painike);
   }
 
   // Asetetaan globaaliin muuttujaan oikea vastaus
-  oikeaVastaus =
-    filteredData[oikeaIndeksi].tieteellinen +
-    " (" +
-    filteredData[oikeaIndeksi].lyhenne +
-    ")";
+  oikeaVastaus = filteredData[oikeaIndeksi].tieteellinen;
 }
 
 /**
@@ -88,6 +85,10 @@ function vaihtoehdotTieteellinen(oikea) {
   return taulukko;
 }
 
+/**
+ *
+ * @param {*} e
+ */
 function tarkistaVastaus(e) {
   e.preventDefault();
 
@@ -100,15 +101,29 @@ function tarkistaVastaus(e) {
   // Luodaan tekstikenttä, johon raportoidaan palaute
   let palautekentta = document.getElementById("palaute");
   let vastaus = document.createElement("p");
-  vastaus.textContent =
-    "Vastauksesi on: " +
-    e.target.value +
-    " eli " +
-    e.target.getAttribute("suomeksi");
-  palautekentta.appendChild(vastaus);
-  let oikea = document.createElement("p");
-  oikea.textContent = "Oikea vastaus on: " + oikeaVastaus;
-  palautekentta.appendChild(oikea);
+
+  if (e.target.value === oikeaVastaus) {
+    vastaus.textContent =
+      "Oikein! " +
+      e.target.value +
+      " (" +
+      e.target.getAttribute("lyhenne") +
+      ") " +
+      " on " +
+      e.target.getAttribute("suomeksi") +
+      ".";
+    palautekentta.appendChild(vastaus);
+  } else {
+    vastaus.textContent =
+      "Vastauksesi on: " +
+      e.target.value +
+      " eli " +
+      e.target.getAttribute("suomeksi");
+    palautekentta.appendChild(vastaus);
+    let oikea = document.createElement("p");
+    oikea.textContent = "Oikea vastaus on: " + oikeaVastaus;
+    palautekentta.appendChild(oikea);
+  }
 
   // Luodaan painike, jolla siirrytään seuraavaan kysymykseen
   let seuraava = document.createElement("button");
