@@ -86,8 +86,8 @@ function vaihtoehdotTieteellinen(oikea) {
 }
 
 /**
- *
- * @param {*} e
+ * Vertaa vastausta oikeaan ja kertoo palautteessa tietoja oikeasta lajista. Myös väärästä lajista kerrotaan suomennos.
+ * @param {Object} - Event-objekti
  */
 function tarkistaVastaus(e) {
   e.preventDefault();
@@ -102,28 +102,21 @@ function tarkistaVastaus(e) {
   let palautekentta = document.getElementById("palaute");
   let vastaus = document.createElement("p");
 
+  // Oikea vastaus
   if (e.target.value === oikeaVastaus) {
-    vastaus.textContent =
-      "Oikein! " +
-      e.target.value +
-      " (" +
-      e.target.getAttribute("lyhenne") +
-      ") " +
-      " on " +
-      e.target.getAttribute("suomeksi") +
-      ".";
-    palautekentta.appendChild(vastaus);
+    vastaus.textContent = `Oikein! ${e.target.value} (${e.target.getAttribute(
+      "lyhenne"
+    )}) on ${e.target.getAttribute("suomeksi")}.`;
   } else {
-    vastaus.textContent =
-      "Vastauksesi on: " +
-      e.target.value +
-      " eli " +
-      e.target.getAttribute("suomeksi");
-    palautekentta.appendChild(vastaus);
+    // Väärä vastaus
+    vastaus.textContent = `Vastauksesi on: ${
+      e.target.value
+    } eli ${e.target.getAttribute("suomeksi")}`;
     let oikea = document.createElement("p");
-    oikea.textContent = "Oikea vastaus on: " + oikeaVastaus;
+    oikea.textContent = `Oikea vastaus on: ${oikeaVastaus}`;
     palautekentta.appendChild(oikea);
   }
+  palautekentta.appendChild(vastaus);
 
   // Luodaan painike, jolla siirrytään seuraavaan kysymykseen
   let seuraava = document.createElement("button");
