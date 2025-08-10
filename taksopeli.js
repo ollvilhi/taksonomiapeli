@@ -12,7 +12,7 @@ let oikeaVastaus;
 
 // Koodi suoritetaan, kun sivu on ladattu
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("JavaScript on valmis ja strict-tila on käytössä!");
+  console.log("JavaScript valmis, strict-tila käytössä.");
 
   // CSV-data JSON-muodossa
   let jsonstring = csvToJson(csvData);
@@ -90,6 +90,12 @@ function vaihtoehdotTieteellinen(oikea) {
 
 function tarkistaVastaus(e) {
   e.preventDefault();
+
+  // Tyhjennetään edellinen palaute, jos sellainen näkyvissä
+  let palaute = document.getElementById("palaute");
+  while (palaute.firstChild) {
+    palaute.removeChild(palaute.firstChild);
+  }
 
   // Luodaan tekstikenttä, johon raportoidaan palaute
   let palautekentta = document.getElementById("palaute");
