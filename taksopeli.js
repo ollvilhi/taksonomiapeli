@@ -109,11 +109,9 @@ function tarkistaVastaus(e) {
     )}) on ${e.target.getAttribute("suomeksi")}.`;
   } else {
     // Väärä vastaus
-    vastaus.textContent = `Vastauksesi on: ${
+    vastaus.textContent = `Yritä uudelleen! ${
       e.target.value
-    } eli ${e.target.getAttribute("suomeksi")}`;
-    let oikea = document.createElement("p");
-    oikea.textContent = `Oikea vastaus on: ${oikeaVastaus}`;
+    } on ${e.target.getAttribute("suomeksi")}`;
     palautekentta.appendChild(oikea);
   }
   palautekentta.appendChild(vastaus);
