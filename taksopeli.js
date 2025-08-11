@@ -111,8 +111,7 @@ function tarkistaVastaus(e) {
     // Väärä vastaus
     vastaus.textContent = `Yritä uudelleen! ${
       e.target.value
-    } on ${e.target.getAttribute("suomeksi")}`;
-    palautekentta.appendChild(oikea);
+    } on ${e.target.getAttribute("suomeksi")}.`;
   }
   palautekentta.appendChild(vastaus);
 
