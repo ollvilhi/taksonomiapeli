@@ -104,9 +104,9 @@ function tarkistaVastaus(e) {
 
   // Oikea vastaus
   if (e.target.value === oikeaVastaus) {
-    vastaus.textContent = `Oikein! ${e.target.value} (${e.target.getAttribute(
+    vastaus.textContent = `Kyllä! ${e.target.value} (${e.target.getAttribute(
       "lyhenne"
-    )}) on ${e.target.getAttribute("suomeksi")}.`;
+    )}) on oikein.`;
   } else {
     // Väärä vastaus
     vastaus.textContent = `Yritä uudelleen! ${
@@ -123,6 +123,10 @@ function tarkistaVastaus(e) {
   palautekentta.appendChild(seuraava);
 }
 
+/**
+ * Nollaa ja lataa uuden kysymyksen.
+ * @param {Object} e - Event-objekti
+ */
 function paivitaKysymys(e) {
   let lomake = document.forms[0];
   let palaute = document.getElementById("palaute");
